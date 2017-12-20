@@ -4,6 +4,7 @@
   "description": "Decorator to apply waypoints to React components",
   "main": "index.js",
   "scripts": {
+    "demo": "webpack --watch --config demo/webpack.config.js & lite-server --baseDir=\"demo\"",
     "lint": "eslint **/*.js",
     "run-tests": "mocha-puppeteer test.js",
     "test": "npm run lint && npm run run-tests"
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "@ueno/eslint-config": "^1.2.7",
+    "babel-loader": "^7.1.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-airbnb": "^2.4.0",
     "babel-preset-env": "^1.6.1",
@@ -44,7 +46,8 @@
     "mocha-puppeteer": "^0.13.0",
     "react": ">=16.2.0",
     "react-dom": "^16.2.0",
-    "react-test-renderer": "^16.2.0"
+    "react-test-renderer": "^16.2.0",
+    "webpack": "^3.10.0"
   },
   "peerDependencies": {
     "react": ">=16.2.0"
