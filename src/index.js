@@ -3,6 +3,8 @@ import Waypoint from './waypoint';
 import getDisplayName from './get-display-name';
 import filterProps from './filter-props';
 
+export { Waypoint };
+
 /**
  * Decorate a component to add an `activated` prop when it scrolls into view for the first time.
  * @param {object} options - Decorator options and default props for scroll trigger.

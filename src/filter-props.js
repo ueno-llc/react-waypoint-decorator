@@ -8,6 +8,8 @@ const filterProps = (obj) => {
       output[key] = obj[key];
     }
   });
+
+  return output;
 };
 
 export default filterProps;
