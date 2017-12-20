@@ -28,7 +28,7 @@ npm install react-waypoint-decorator
 
 ## Usage
 
-## The Basics
+### The Basics
 
 This is the most basic form of a scroll trigger. This component will receive an `activated` prop, which is either `true` or `false` depending on if the component has scrolled into view. By default, "scrolled into view" means that the _top edge of the element_ is at least _halfway up the page_. You can fine-tune this threshold by passing an options object to the decorator.
 
