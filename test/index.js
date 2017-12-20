@@ -5,6 +5,7 @@ import React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { expect } from 'chai';
+import ReactWaypoint from 'react-waypoint';
 import waypoint, { Waypoint } from '../src';
 import filterProps from '../src/filter-props';
 import getDisplayName from '../src/get-display-name';
@@ -57,6 +58,42 @@ describe('waypoint()', () => {
     const wrapper = mount(<WaypointComponent activated />);
 
     expect(wrapper.find(Component).prop('activated')).to.equal(true);
+  });
+});
+
+describe('<Waypoint />', () => {
+  let Component;
+
+  before(() => {
+    Component = () => (
+      <Waypoint>
+        {activated => <p>{String(activated)}</p>}
+      </Waypoint>
+    );
+  });
+
+  it('renders a wrapping <div>', () => {
+    const wrapper = mount(<Component />);
+
+    expect(wrapper.find('div').length).to.equal(1);
+  });
+
+  it('renders a waypoint', () => {
+    const wrapper = mount(<Component />);
+
+    expect(wrapper.find(ReactWaypoint).length).to.equal(1);
+  });
+
+  it('renders child content', () => {
+    const wrapper = mount(<Component />);
+
+    expect(wrapper.find('p').length).to.equal(1);
+  });
+
+  it('starts with activated = false', () => {
+    const wrapper = mount(<Component />);
+
+    expect(wrapper.find('p').text()).to.equal('false');
   });
 });
 
