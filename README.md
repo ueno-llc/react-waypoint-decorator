@@ -201,4 +201,4 @@ npm test
 
 ## License
 
-MIT &copy; [Geoff Kimball](http://geoffkimball.com)
+MIT &copy; [ueno.](http://ueno.co)
