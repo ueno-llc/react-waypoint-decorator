@@ -1,11 +1,13 @@
 {
   "name": "react-waypoint-decorator",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Decorator to apply waypoints to React components",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
+    "bundle": "webpack",
     "demo": "webpack --watch --config demo/webpack.config.js & lite-server --baseDir=\"demo\"",
     "lint": "eslint **/*.js",
+    "prepublishOnly": "npm run test && npm run bundle",
     "run-tests": "mocha-puppeteer test.js",
     "test": "npm run lint && npm run run-tests"
   },
@@ -27,7 +29,6 @@
   },
   "homepage": "https://github.com/ueno-llc/react-waypoint-decorator#readme",
   "dependencies": {
-    "lodash.omit": "^4.5.0",
     "prop-types": "^15.6.0",
     "react-waypoint": "^7.3.4"
   },

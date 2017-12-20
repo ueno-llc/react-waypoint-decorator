@@ -51,3 +51,8 @@ jspm_packages
 
 # Demo bundle
 demo/bundle.js
+
+# Dist files
+lib
+
+.DS_Store

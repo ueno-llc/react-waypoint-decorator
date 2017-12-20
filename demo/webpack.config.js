@@ -16,7 +16,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'react-waypoint-decorator': path.resolve(__dirname, '../index.js'),
+      'react-waypoint-decorator': path.resolve(__dirname, '../src/index.js'),
     },
   },
 };
