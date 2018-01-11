@@ -4,7 +4,7 @@
 
 [![Travis](https://img.shields.io/travis/ueno-llc/react-waypoint-decorator.svg?maxAge=2592000)](https://travis-ci.org/ueno-llc/react-waypoint-decorator) [![npm](https://img.shields.io/npm/v/react-waypoint-decorator.svg?maxAge=2592000)](https://www.npmjs.com/package/react-waypoint-decorator)
 
-[react-waypoint](https://github.com/brigade/react-waypoint) is a library that allows you to run code when an element scrolls into view. This is a decorator that wraps a React component in a waypoint, and passes down an `activated` prop to that component when it scrolls into view. It allows you to easily set up scroll triggers for components.
+[react-waypoint](https://github.com/brigade/react-waypoint) is a library that allows you to run code when an element scrolls into view. This is a decorator that wraps a React component in a waypoint, and passes down an `activated` prop to that component the first time it scrolls into view. It's especially handy for animating elements in as the user scrolls down the page.
 
 ## Table of contents
 
@@ -30,7 +30,7 @@ npm install react-waypoint-decorator
 
 ### The Basics
 
-This is the most basic form of a scroll trigger. This component will receive an `activated` prop, which is either `true` or `false` depending on if the component has scrolled into view. By default, "scrolled into view" means that the _top edge of the element_ is at least _halfway up the page_. You can fine-tune this threshold by passing an options object to the decorator.
+This is the most basic form of a scroll trigger. This component will receive an `activated` prop, which is either `true` or `false` depending on if the component has scrolled into view yet. By default, "scrolled into view" means that the _top edge of the element_ is at least _halfway up the page_. You can fine-tune this threshold by passing an options object to the decorator.
 
 ```jsx
 import React, { Component } from 'react';
@@ -48,7 +48,7 @@ export default class Box extends Component {
 }
 ```
 
-Note that this syntax uses the experimental decorator syntax. If you use Babel to transpile JavaScript, you can add decorator support with the [decorators transform plugin](https://babeljs.io/docs/plugins/transform-decorators/).
+Note that this example uses the experimental decorator syntax. If you use Babel to transpile JavaScript, you can add decorator support with the [decorators transform plugin](https://babeljs.io/docs/plugins/transform-decorators/).
 
 If your setup doesn't support decorators, you can also call the decorator as a function.
 
@@ -73,11 +73,16 @@ export default waypoint(Box);
 
 The new component created by the decorator will wrap your component and its waypoint in a plain `<div />`. This means your component will now be block-level, and generally fill the width of its container. Keep this in mind when adding waypoints, particularly if you use a grid system. If you style a component to have a percentage width, and then wrap it in a waypoint, the percentage width won't be applied, because the component is now wrapped in a full-width `<div />`.
 
+```html
+<div>
+  <Waypoint />
+  <YourComponent />
+</div>
+```
+
 ### Passing Options
 
-You can pass an object of options to the decorator to customize the waypoint. The `activatedProp` option allows you to change the name of the prop used to signal if the component has scrolled into view yet. The default prop name is `activated`.
-
-The rest of the options are props to pass to the higher-order component&mdash;refer to the [props for the `<Waypoint />` component](#props) below.
+You can pass an object of options to the decorator to customize the waypoint. For example, the `activatedProp` option lets you change the name of the "activated" prop passed to the component. Refer to the [full list of options](#waypointoptions) below.
 
 ```jsx
 @waypoint({
@@ -87,7 +92,7 @@ The rest of the options are props to pass to the higher-order component&mdash;re
 class Box extends Component {}
 ```
 
-If you aren't using the decorator syntax, you'll call the `waypoint` function twice to pass options.
+If you aren't using the decorator syntax, you'll call the `waypoint()` function twice to pass options.
 
 ```jsx
 waypoint({
@@ -98,7 +103,7 @@ waypoint({
 
 ### Reusing Options
 
-By default, the `waypoint` function/decorator takes a class and returns a new class. However, when you pass an options object, instead of returning a new class, it returns a new decorator function. If all your waypoints use the same settings, you can create one decorator to share between components.
+By default, the `waypoint()` function/decorator takes a class and returns a new class. However, when you pass an options object, instead of returning a new class, it returns a new decorator function. If all your waypoints use the same settings, you can create one decorator to share between components.
 
 ```jsx
 import React, { Component } from 'react';
@@ -134,7 +139,7 @@ class Box extends Component {
 
 ### Component Version
 
-The decorator tracks the scroll position of the _entire_ component. If you only want to monitor a specific chunk of a component, we've got you covered.
+The decorator tracks the scroll position of the _entire_ component. If you only want to monitor a specific chunk of a component, we've got you covered with the `<Waypoint />` component.
 
 ```jsx
 import React, { Component } from 'react';
