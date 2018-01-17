@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Decorator to apply waypoints to React components",
   "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "bundle": "webpack",
     "demo": "webpack --watch --config demo/webpack.config.js & lite-server --baseDir=\"demo\"",
