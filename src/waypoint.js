@@ -11,7 +11,7 @@ const win = typeof window !== 'undefined' ? window : undefined;
 export default class Waypoint extends PureComponent {
 
   /**
-   * Prop types for `<ScrollTrigger />`.
+   * Prop types for `<Waypoint />`.
    * @type object
    * @prop {function} children - Render function that receives one argument, `activated`.
    * @prop {number} [offset=50] - Percentage height of the screen that the top edge of the element
@@ -31,7 +31,7 @@ export default class Waypoint extends PureComponent {
   }
 
   /**
-   * Internal state for `<ScrollTrigger />`.
+   * Internal state for `<Waypoint />`.
    * @private
    * @type object
    * @prop {boolean} activated - If element has scrolled into view.

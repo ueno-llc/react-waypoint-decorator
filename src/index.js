@@ -28,11 +28,11 @@ export default (options) => {
     return wrapper;
   };
 
-  // When written `@scrollTrigger` (no function call)
+  // When written `@waypoint` (no function call)
   if (typeof options === 'function') {
     return wrap(options, {});
   }
 
-  // When written `@scrollTrigger()` (function call)
+  // When written `@waypoint()` (function call)
   return Child => wrap(Child, options);
 };
