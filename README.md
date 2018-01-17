@@ -26,6 +26,16 @@
 npm install react-waypoint-decorator
 ```
 
+This package has one peer dependency, React:
+
+```json
+{
+  "peerDependencies": {
+    "react": ">=16.2.0"
+  }
+}
+```
+
 ## Usage
 
 ### The Basics
