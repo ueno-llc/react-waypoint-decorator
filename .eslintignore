@@ -1,0 +1,3 @@
+.mocha-puppeteer
+demo/bundle.js
+lib
