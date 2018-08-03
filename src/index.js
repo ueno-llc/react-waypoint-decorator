@@ -1,7 +1,6 @@
 import React from 'react';
 import Waypoint from './waypoint';
 import getDisplayName from './get-display-name';
-import filterProps from './filter-props';
 
 export { Waypoint };
 
@@ -11,16 +10,17 @@ export { Waypoint };
  * @returns {function} New higher order React component.
  */
 export default (options) => {
-  // Wraps the child component in a scroll trigger
-  const wrap = (Child, opts) => {
-    // Creates the activated prop to add to `<Child />` below
-    const activatedProp = activated => ({
-      [opts.activatedProp || 'activated']: activated,
-    });
+  // Wraps the child component in a waypoint
+  const wrap = (Child, { activatedProp = 'activated', ...opts }) => {
     // Final React component to be returned by the decorator
     const wrapper = props => (
-      <Waypoint {...filterProps(opts)}>
-        {activated => <Child {...activatedProp(activated)} {...props} />}
+      <Waypoint {...opts}>
+        {activated => (
+          <Child
+            {...{ [activatedProp]: activated }}
+            {...props}
+          />
+        )}
       </Waypoint>
     );
 
@@ -30,7 +30,9 @@ export default (options) => {
 
   // When written `@waypoint` (no function call)
   if (typeof options === 'function') {
-    return wrap(options, {});
+    const Child = options;
+
+    return wrap(Child, {});
   }
 
   // When written `@waypoint()` (function call)

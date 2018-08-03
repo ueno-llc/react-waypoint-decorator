@@ -7,7 +7,6 @@ import Adapter from 'enzyme-adapter-react-16';
 import { expect } from 'chai';
 import ReactWaypoint from 'react-waypoint';
 import waypoint, { Waypoint } from '../src';
-import filterProps from '../src/filter-props';
 import getDisplayName from '../src/get-display-name';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -94,19 +93,6 @@ describe('<Waypoint />', () => {
     const wrapper = mount(<Component />);
 
     expect(wrapper.find('p').text()).to.equal('false');
-  });
-});
-
-describe('filterProps()', () => {
-  it('filters an object to only contain props from <Waypoint />', () => {
-    const input = {
-      foo: true,
-      offset: 25,
-    };
-
-    expect(filterProps(input)).to.eql({
-      offset: 25,
-    });
   });
 });
 
