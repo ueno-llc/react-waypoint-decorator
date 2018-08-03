@@ -1,6 +1,6 @@
 {
   "name": "react-waypoint-decorator",
-  "version": "1.0.0",
+  "version": "2.0.0-rc.1",
   "description": "Decorator to apply waypoints to React components",
   "main": "lib/index.js",
   "files": [
