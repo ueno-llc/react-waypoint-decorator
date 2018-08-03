@@ -13,6 +13,7 @@ export default class Waypoint extends PureComponent {
   /**
    * Prop types for `<Waypoint />`.
    * @type object
+   * @prop {boolean} autoRun - Immediately flip to `activated`, regardless of where the element is.
    * @prop {function} children - Render function that receives one argument, `activated`.
    * @prop {number} [offset=50] - Percentage height of the screen that the top edge of the element
    must be positioned at to be activated.
@@ -20,12 +21,14 @@ export default class Waypoint extends PureComponent {
    the triggered element. By default, it's a plain `<div />`.
    */
   static propTypes = {
+    autoRun: PropTypes.bool,
     children: PropTypes.func.isRequired,
     offset: PropTypes.number,
     wrapper: PropTypes.func,
   }
 
   static defaultProps = {
+    autoRun: false,
     offset: 50,
     wrapper: children => <div>{children}</div>,
   }
@@ -38,6 +41,16 @@ export default class Waypoint extends PureComponent {
    */
   state = {
     activated: false,
+  }
+
+  componentDidMount() {
+    if (this.props.autoRun) {
+      setTimeout(() => {
+        this.setState({
+          activated: true,
+        });
+      }, 0);
+    }
   }
 
   /**

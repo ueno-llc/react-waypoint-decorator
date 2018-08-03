@@ -188,6 +188,7 @@ Returns a new React component.
 Create a waypoint decorator with custom settings.
 
 - **options** (object): waypoint settings.
+  - **autoRun** (boolean): trigger the waypoint immediately, regardless of where it is when the page loads. Useful if you have something above the fold that needs to animate in no matter what.
   - **activatedProp** (string): name of boolean prop to pass to wrapped component. Default is `activated`.
   - **offset** (number): percentage offset from the bottom of the window that triggers a waypoint. The default is `50`, which means the top edge of the component must be 50% of the way up the screen to trigger the waypoint. Higher numbers make components trigger later, while lower numbers make them trigger sooner.
   - **wrapper** (function): HTML to wrap the waypoint and component in. By default it's a `<div />`. To change this, pass a function to this object that takes one parameter, `children`, and returns JSX.
@@ -202,6 +203,7 @@ React component that wraps the output of a render function in a waypoint. The re
 
 The `<Waypoint />` component takes these props:
 
+- **autoRun** (boolean): trigger the waypoint immediately, regardless of where it is when the page loads. Useful if you have something above the fold that needs to animate in no matter what.
 - **offset** (number): percentage offset from the bottom of the window that triggers a waypoint. The default is `50`, which means the top edge of the component must be 50% of the way up the screen to trigger the waypoint. Higher numbers make components trigger later, while lower numbers make them trigger sooner.
 - **wrapper** (function): HTML to wrap the waypoint and component in. By default it's a `<div />`. To change this, pass a function to this object that takes one parameter, `children`, and returns JSX.
 
