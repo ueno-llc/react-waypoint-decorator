@@ -7,7 +7,6 @@ import Adapter from 'enzyme-adapter-react-16';
 import { expect } from 'chai';
 import ReactWaypoint from 'react-waypoint';
 import waypoint, { Waypoint } from '../src';
-import getDisplayName from '../src/get-display-name';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -24,7 +23,7 @@ describe('waypoint()', () => {
   });
 
   it('includes the name of the component in the name of the wrapped component', () => {
-    expect(waypoint(Component)).to.have.property('displayName', 'Thing-withWaypoint');
+    expect(waypoint(Component)).to.have.property('displayName', 'waypoint(Thing)');
   });
 
   it('passes props to the underlying <Waypoint /> component', () => {
@@ -93,13 +92,5 @@ describe('<Waypoint />', () => {
     const wrapper = mount(<Component />);
 
     expect(wrapper.find('p').text()).to.equal('false');
-  });
-});
-
-describe('getDisplayName()', () => {
-  it('creates a wrapper component name', () => {
-    class Thing {}
-
-    expect(getDisplayName(Thing)).to.equal('Thing-withWaypoint');
   });
 });

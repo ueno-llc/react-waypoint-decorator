@@ -33,6 +33,7 @@
   "homepage": "https://github.com/ueno-llc/react-waypoint-decorator#readme",
   "dependencies": {
     "prop-types": "^15.6.2",
+    "react-display-name": "^0.2.4",
     "react-waypoint": "^7.3.4"
   },
   "devDependencies": {

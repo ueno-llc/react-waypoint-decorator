@@ -1,6 +1,6 @@
 import React from 'react';
+import displayName from 'react-display-name';
 import Waypoint from './waypoint';
-import getDisplayName from './get-display-name';
 
 export { Waypoint };
 
@@ -13,7 +13,7 @@ export default (options) => {
   // Wraps the child component in a waypoint
   const wrap = (Child, { activatedProp = 'activated', ...opts }) => {
     // Final React component to be returned by the decorator
-    const wrapper = props => (
+    const component = props => (
       <Waypoint {...opts}>
         {activated => (
           <Child
@@ -24,8 +24,8 @@ export default (options) => {
       </Waypoint>
     );
 
-    wrapper.displayName = getDisplayName(Child);
-    return wrapper;
+    component.displayName = `waypoint(${displayName(Child)})`;
+    return component;
   };
 
   // When written `@waypoint` (no function call)
