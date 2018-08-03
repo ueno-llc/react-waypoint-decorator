@@ -4,13 +4,9 @@ import React from 'react';
 import { render } from 'react-dom'; // eslint-disable-line
 import waypoint from 'react-waypoint-decorator'; // eslint-disable-line
 
-const Box = (props) => {
-  const Component = waypoint(props)(({ activated }) => (
-    <div className={`box ${activated ? 'activated' : ''}`} />
-  ));
-
-  return <Component {...props} />;
-};
+const Box = waypoint(props => props)(({ activated }) => (
+  <div className={`box ${activated ? 'activated' : ''}`} />
+));
 
 const App = () => (
   <div className="app">

@@ -13,7 +13,7 @@
   - [The Basics](#the-basics)
   - [Output HTML](#output-html)
   - [Passing Options](#passing-options)
-  - [Reusing Options](#reusing-options)
+  - [Deriving Options from Props](#deriving-options-from-props)
   - [Responding to Activation](#responding-to-activation)
   - [Component Version](#component-version)
 - [API](#api)
@@ -46,7 +46,7 @@ This is the most basic form of a scroll trigger. This component will receive an 
 import React, { Component } from 'react';
 import waypoint from 'react-waypoint-decorator';
 
-@waypoint
+@waypoint()
 export default class Box extends Component {
   render() {
     if (this.props.activated) {
@@ -76,14 +76,14 @@ class Box extends Component {
   }
 }
 
-export default waypoint(Box);
+export default waypoint()(Box);
 ```
 
 ### Output HTML
 
 The new component created by the decorator will wrap your component and its waypoint in a plain `<div />`. This means your component will now be block-level, and generally fill the width of its container. Keep this in mind when adding waypoints, particularly if you use a grid system. If you style a component to have a percentage width, and then wrap it in a waypoint, the percentage width won't be applied, because the component is now wrapped in a full-width `<div />`.
 
-```html
+```jsx
 <div>
   <Waypoint />
   <YourComponent />
@@ -102,46 +102,27 @@ You can pass an object of options to the decorator to customize the waypoint. Fo
 class Box extends Component {}
 ```
 
-If you aren't using the decorator syntax, you'll call the `waypoint()` function twice to pass options.
+### Deriving Options from Props
+
+Instead of passing an object to the `waypoint()` decorator, you can also pass a function gets the component props as a parameter, and returns options.
 
 ```jsx
-waypoint({
-  activatedProp: 'visible',
-  offset: 25,
-})(Box);
-```
-
-### Reusing Options
-
-By default, the `waypoint()` function/decorator takes a class and returns a new class. However, when you pass an options object, instead of returning a new class, it returns a new decorator function. If all your waypoints use the same settings, you can create one decorator to share between components.
-
-```jsx
-import React, { Component } from 'react';
-import waypoint from 'react-waypoint-decorator';
-
-const customWaypoint = waypoint({
-  activatedProp: 'visible',
-  offset: 25,
-});
-
-// As a decorator
-@customWaypoint
-class BoxOne extends Component {}
-
-// As a function
-const BoxTwo = customWaypoint(({ visible }) => <div />);
+@waypoint(props => ({
+  offset: props.offset,
+}))
+class Box extends Component {}
 ```
 
 ### Responding to Activation
 
-To run specific code when a component scrolls into view, use `componentWillReceiveProps()`.
+To run code when a component scrolls into view, use `componentDidUpdate()`. Or, to update state in response to the scroll event, use [`getDerivedStateFromProps()`](https://reactjs.org/docs/react-component.html#static-getderivedstatefromprops).
 
 ```jsx
 @waypoint
 class Box extends Component {
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.activated && nextProps.activated) {
-      // If we're here, then the component is scrolling into view for the first time
+  componentDidUpdate(prevProps) {
+    if (!prevProps.activated && this.props..activated) {
+      // If we're here, then the component has scrolled into view for the first time
     }
   }
 }
@@ -175,25 +156,17 @@ The `<Waypoint />` component takes a render function as a child. The function ha
 
 ## API
 
-### `waypoint(Child)`
-
-Create a higher-order component that pairs the input component with a waypoint.
-
-- **Child** (function or class): React component to wrap.
-
-Returns a new React component.
-
 ### `waypoint(options)`
 
 Create a waypoint decorator with custom settings.
 
-- **options** (object): waypoint settings.
+- **options** (object|function): waypoint settings. It can be an object or a function that takes props and returns an object. Either way, the object can have any of these properties:
   - **autoRun** (boolean): trigger the waypoint immediately, regardless of where it is when the page loads. Useful if you have something above the fold that needs to animate in no matter what.
   - **activatedProp** (string): name of boolean prop to pass to wrapped component. Default is `activated`.
   - **offset** (number): percentage offset from the bottom of the window that triggers a waypoint. The default is `50`, which means the top edge of the component must be 50% of the way up the screen to trigger the waypoint. Higher numbers make components trigger later, while lower numbers make them trigger sooner.
   - **wrapper** (function): HTML to wrap the waypoint and component in. By default it's a `<div />`. To change this, pass a function to this object that takes one parameter, `children`, and returns JSX.
 
-Returns a decorator function as described in the previous section.
+Returns a decorated React component.
 
 ### `<Waypoint />`
 

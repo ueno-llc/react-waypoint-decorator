@@ -1,4 +1,6 @@
-import React from 'react';
+/* eslint-disable react/no-multi-comp */
+
+import React, { Component } from 'react';
 import displayName from 'react-display-name';
 import Waypoint from './waypoint';
 
@@ -6,35 +8,29 @@ export { Waypoint };
 
 /**
  * Decorate a component to add an `activated` prop when it scrolls into view for the first time.
- * @param {object} options - Decorator options and default props for scroll trigger.
+ * @param {object|function} [options] - Decorator options and default props for scroll trigger.
  * @returns {function} New higher order React component.
  */
-export default (options) => {
-  // Wraps the child component in a waypoint
-  const wrap = (Child, { activatedProp = 'activated', ...opts }) => {
-    // Final React component to be returned by the decorator
-    const component = props => (
-      <Waypoint {...opts}>
+export default (options = {}) => Child => class WithWaypoint extends Component {
+
+  static displayName = `waypoint(${displayName(Child)})`
+
+  render() {
+    const derivedProps = typeof options === 'function';
+    const {
+      activatedProp = 'activated',
+      ...waypointProps
+    } = derivedProps ? options(this.props) : options;
+
+    return (
+      <Waypoint {...waypointProps}>
         {activated => (
           <Child
             {...{ [activatedProp]: activated }}
-            {...props}
+            {...this.props}
           />
         )}
       </Waypoint>
     );
-
-    component.displayName = `waypoint(${displayName(Child)})`;
-    return component;
-  };
-
-  // When written `@waypoint` (no function call)
-  if (typeof options === 'function') {
-    const Child = options;
-
-    return wrap(Child, {});
   }
-
-  // When written `@waypoint()` (function call)
-  return Child => wrap(Child, options);
 };

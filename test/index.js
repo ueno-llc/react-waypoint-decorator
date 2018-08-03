@@ -19,15 +19,15 @@ describe('waypoint()', () => {
   });
 
   it('returns a React component', () => {
-    expect(waypoint(Component)).to.be.a('function');
+    expect(waypoint()(Component)).to.be.a('function');
   });
 
   it('includes the name of the component in the name of the wrapped component', () => {
-    expect(waypoint(Component)).to.have.property('displayName', 'waypoint(Thing)');
+    expect(waypoint()(Component)).to.have.property('displayName', 'waypoint(Thing)');
   });
 
   it('passes props to the underlying <Waypoint /> component', () => {
-    const WaypointComponent = waypoint(Component);
+    const WaypointComponent = waypoint()(Component);
     const wrapper = mount(<WaypointComponent />);
 
     expect(wrapper.find(Component).prop('activated')).to.equal(false);
@@ -52,7 +52,7 @@ describe('waypoint()', () => {
   });
 
   it('allows an externally-applied `activated` prop to override the waypoint', () => {
-    const WaypointComponent = waypoint(Component);
+    const WaypointComponent = waypoint()(Component);
     const wrapper = mount(<WaypointComponent activated />);
 
     expect(wrapper.find(Component).prop('activated')).to.equal(true);
